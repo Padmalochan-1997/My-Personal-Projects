@@ -18,7 +18,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class W3Schools_Automation {
 
-	WebDriver driver;
+	public static WebDriver driver;
 
 	@Test
 	public void test1() {
@@ -26,6 +26,7 @@ public class W3Schools_Automation {
 		System.out.println("We'll Use this method to Set-Up Chromedriver and" 
 				+  " launch Google.com on Chrome Browser");
 		System.out.println("=============================");
+		
 		
 		WebDriverManager.chromedriver().setup();
 		driver= new ChromeDriver();
