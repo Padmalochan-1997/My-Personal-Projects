@@ -18,7 +18,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class W3Schools_Automation {
 
-	public static WebDriver driver;
+	WebDriver driver;
 
 	@Test
 	public void test1() {
