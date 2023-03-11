@@ -11,14 +11,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class W3Schools_Automation {
 
-	WebDriver driver;
+	static WebDriver driver;
 
 	@Test
 	public void test1() {
@@ -29,7 +31,13 @@ public class W3Schools_Automation {
 		
 		
 		WebDriverManager.chromedriver().setup();
-		driver= new ChromeDriver();
+		
+		ChromeOptions options= new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        DesiredCapabilities dc= new DesiredCapabilities();
+        dc.setCapability(ChromeOptions.CAPABILITY, options);
+        options.merge(dc);
+		driver= new ChromeDriver(options);
 		
 		driver.manage().window().maximize();
 		driver.navigate().to("https://www.google.com/");
@@ -62,7 +70,7 @@ public class W3Schools_Automation {
 		System.out.println("We'll Use this method to Search W3 Schools from the Google Auto Suggestion");
 		System.out.println("=============================");
 		
-		driver.findElement(By.xpath("//input[@name='q']")).sendKeys("w3");
+		driver.findElement(By.name("q")).sendKeys("w3");
 		Thread.sleep(3000);
 		List<WebElement> auto= driver.findElements(By.xpath("//ul[@class='G43f7e']/li"));
 		
@@ -145,8 +153,8 @@ public class W3Schools_Automation {
 		}
 		
 		Actions action1= new Actions (driver);
-		action1.moveToElement(driver.findElement(By.linkText
-				("Try it Yourself »"))).click().build().perform();
+		action1.moveToElement(driver.findElement(By.linkText("Try it Yourself »")
+				)).click().build().perform();
 		
 		Thread.sleep(3000);
 		Set<String> Win= driver.getWindowHandles();
