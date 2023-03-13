@@ -1,5 +1,8 @@
 package myworkspace;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.List;
@@ -202,8 +205,52 @@ public class W3Schools_Automation {
 		
 		JavascriptExecutor js= (JavascriptExecutor)driver;
 		js.executeScript("window.scrollBy(0,500)");
-		
-		Thread.sleep(5000);
-		driver.quit();
-	}
+	}	
+		@Test
+		public void test7() {
+			
+			//finding total hyperlinks in a WebPage
+			List<WebElement> links= driver.findElements(By.tagName("a"));
+			System.out.println("Total links are: " +links.size());
+			
+			int resCode= 200;
+			int brokenLinks= 0;
+			
+			for(WebElement element: links) {
+				
+				//captured entire urls of the hyperlinks 
+				String url= element.getAttribute("href");
+				
+				try {
+					URL urlLink= new URL(url);
+					
+					//opened connections for the Captured URLs
+					HttpURLConnection h= (HttpURLConnection)urlLink.openConnection();
+					
+					//sent requests to the links
+					h.setRequestMethod("HEAD");
+					
+					//connected the Links
+					h.connect();
+					
+					//get their response codes
+					resCode= h.getResponseCode();
+					
+					if(resCode >= 400) {
+						System.out.println(url + " is broken");
+						brokenLinks++;
+					}
+					else {
+						System.out.println("No broken links are found");
+					}
+				}
+			catch(MalformedURLException e) {
+				
+			}
+				catch(Exception e) {
+				}
+			}
+			System.out.println("Total broken links are: " + brokenLinks);
+		}
+	
 }
