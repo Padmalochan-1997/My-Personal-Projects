@@ -16,7 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -37,9 +36,7 @@ public class W3Schools_Automation {
 		
 		ChromeOptions options= new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        DesiredCapabilities dc= new DesiredCapabilities();
-        dc.setCapability(ChromeOptions.CAPABILITY, options);
-        options.merge(dc);
+        
 		driver= new ChromeDriver(options);
 		
 		driver.manage().window().maximize();
@@ -207,7 +204,7 @@ public class W3Schools_Automation {
 		js.executeScript("window.scrollBy(0,500)");
 	}	
 		@Test
-		public void test7() {
+		public void test7() throws InterruptedException {
 			
 			//finding total hyperlinks in a WebPage
 			List<WebElement> links= driver.findElements(By.tagName("a"));
@@ -251,6 +248,8 @@ public class W3Schools_Automation {
 				}
 			}
 			System.out.println("Total broken links are: " + brokenLinks);
+			
+			Thread.sleep(3000);
+			driver.quit();
 		}
-	
 }
